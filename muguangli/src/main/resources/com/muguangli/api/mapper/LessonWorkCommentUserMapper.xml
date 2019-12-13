@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muguangli.api.mapper.LessonWorkCommentUserMapper">
+  <resultMap id="BaseResultMap" type="com.muguangli.api.pojo.LessonWorkCommentUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="comment_open_id" jdbcType="VARCHAR" property="commentOpenId" />
+    <result column="comment_nick_name" jdbcType="VARCHAR" property="commentNickName" />
+    <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+    <result column="work_open_id" jdbcType="VARCHAR" property="workOpenId" />
+    <result column="work_nick_name" jdbcType="VARCHAR" property="workNickName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, work_id, comment_open_id, comment_nick_name, comment_content, work_open_id, work_nick_name, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lesson_work_comment_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lesson_work_comment_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.muguangli.api.pojo.LessonWorkCommentUser">
+    insert into lesson_work_comment_user (id, work_id, comment_open_id, 
+      comment_nick_name, comment_content, work_open_id, 
+      work_nick_name, create_time)
+    values (#{id,jdbcType=INTEGER}, #{workId,jdbcType=INTEGER}, #{commentOpenId,jdbcType=VARCHAR}, 
+      #{commentNickName,jdbcType=VARCHAR}, #{commentContent,jdbcType=VARCHAR}, #{workOpenId,jdbcType=VARCHAR}, 
+      #{workNickName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.muguangli.api.pojo.LessonWorkCommentUser">
+    insert into lesson_work_comment_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="workId != null">
+        work_id,
+      </if>
+      <if test="commentOpenId != null">
+        comment_open_id,
+      </if>
+      <if test="commentNickName != null">
+        comment_nick_name,
+      </if>
+      <if test="commentContent != null">
+        comment_content,
+      </if>
+      <if test="workOpenId != null">
+        work_open_id,
+      </if>
+      <if test="workNickName != null">
+        work_nick_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workId != null">
+        #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="commentOpenId != null">
+        #{commentOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNickName != null">
+        #{commentNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="workOpenId != null">
+        #{workOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="workNickName != null">
+        #{workNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.muguangli.api.pojo.LessonWorkCommentUser">
+    update lesson_work_comment_user
+    <set>
+      <if test="workId != null">
+        work_id = #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="commentOpenId != null">
+        comment_open_id = #{commentOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNickName != null">
+        comment_nick_name = #{commentNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        comment_content = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="workOpenId != null">
+        work_open_id = #{workOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="workNickName != null">
+        work_nick_name = #{workNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.muguangli.api.pojo.LessonWorkCommentUser">
+    update lesson_work_comment_user
+    set work_id = #{workId,jdbcType=INTEGER},
+      comment_open_id = #{commentOpenId,jdbcType=VARCHAR},
+      comment_nick_name = #{commentNickName,jdbcType=VARCHAR},
+      comment_content = #{commentContent,jdbcType=VARCHAR},
+      work_open_id = #{workOpenId,jdbcType=VARCHAR},
+      work_nick_name = #{workNickName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

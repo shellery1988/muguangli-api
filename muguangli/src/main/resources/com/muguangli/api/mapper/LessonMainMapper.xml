@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muguangli.api.mapper.LessonMainMapper">
+  <resultMap id="BaseResultMap" type="com.muguangli.api.pojo.LessonMain">
+    <id column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="lesson_name" jdbcType="VARCHAR" property="lessonName" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="unlock_score" jdbcType="INTEGER" property="unlockScore" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="online_date_time" jdbcType="TIMESTAMP" property="onlineDateTime" />
+    <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="need_unlock" jdbcType="INTEGER" property="needUnlock" />
+    <result column="unlock_lesson_id" jdbcType="INTEGER" property="unlockLessonId" />
+  </resultMap>
+  <resultMap id="BaseResultMapVO" type="com.muguangli.api.vo.LessonMainVO">
+    <id column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="lesson_name" jdbcType="VARCHAR" property="lessonName" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="unlock_score" jdbcType="INTEGER" property="unlockScore" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="online_date_time" jdbcType="TIMESTAMP" property="onlineDateTime" />
+    <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="need_unlock" jdbcType="INTEGER" property="needUnlock" />
+    <result column="unlock_lesson_id" jdbcType="INTEGER" property="unlockLessonId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lesson_id, lesson_name, teacher_name, unlock_score, status, online_date_time, video_url, 
+    need_unlock, unlock_lesson_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lesson_main
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryLessinInfoById" parameterType="java.lang.Integer" resultMap="BaseResultMapVO">
+    select 
+    <include refid="Base_Column_List" />
+    from lesson_main
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lesson_main
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.muguangli.api.pojo.LessonMain">
+    insert into lesson_main (lesson_id, lesson_name, teacher_name, 
+      unlock_score, status, online_date_time, 
+      video_url, need_unlock, unlock_lesson_id
+      )
+    values (#{lessonId,jdbcType=INTEGER}, #{lessonName,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+      #{unlockScore,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{onlineDateTime,jdbcType=TIMESTAMP}, 
+      #{videoUrl,jdbcType=VARCHAR}, #{needUnlock,jdbcType=INTEGER}, #{unlockLessonId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.muguangli.api.pojo.LessonMain">
+    insert into lesson_main
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="lessonName != null">
+        lesson_name,
+      </if>
+      <if test="teacherName != null">
+        teacher_name,
+      </if>
+      <if test="unlockScore != null">
+        unlock_score,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="onlineDateTime != null">
+        online_date_time,
+      </if>
+      <if test="videoUrl != null">
+        video_url,
+      </if>
+      <if test="needUnlock != null">
+        need_unlock,
+      </if>
+      <if test="unlockLessonId != null">
+        unlock_lesson_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonName != null">
+        #{lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="unlockScore != null">
+        #{unlockScore,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="onlineDateTime != null">
+        #{onlineDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="videoUrl != null">
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="needUnlock != null">
+        #{needUnlock,jdbcType=INTEGER},
+      </if>
+      <if test="unlockLessonId != null">
+        #{unlockLessonId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.muguangli.api.pojo.LessonMain">
+    update lesson_main
+    <set>
+      <if test="lessonName != null">
+        lesson_name = #{lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="unlockScore != null">
+        unlock_score = #{unlockScore,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="onlineDateTime != null">
+        online_date_time = #{onlineDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="videoUrl != null">
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="needUnlock != null">
+        need_unlock = #{needUnlock,jdbcType=INTEGER},
+      </if>
+      <if test="unlockLessonId != null">
+        unlock_lesson_id = #{unlockLessonId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.muguangli.api.pojo.LessonMain">
+    update lesson_main
+    set lesson_name = #{lessonName,jdbcType=VARCHAR},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      unlock_score = #{unlockScore,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      online_date_time = #{onlineDateTime,jdbcType=TIMESTAMP},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      need_unlock = #{needUnlock,jdbcType=INTEGER},
+      unlock_lesson_id = #{unlockLessonId,jdbcType=INTEGER}
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </update>
+  <select id="getListPage" resultMap="BaseResultMapVO">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from lesson_main where 1=1
+  	<if test="queryBean.lessonName != null">
+      and lesson_name = #{queryBean.lessonName,jdbcType=VARCHAR}
+    </if>
+    <if test="queryBean.teacherName != null">
+      and teacher_name = #{queryBean.teacherName,jdbcType=VARCHAR}
+    </if>
+    <if test="queryBean.unlockScore != null">
+      and unlock_score = #{queryBean.unlockScore,jdbcType=INTEGER}
+    </if>
+    <if test="queryBean.status != null">
+      and status = #{queryBean.status,jdbcType=INTEGER}
+    </if>
+    <if test="queryBean.onlineDateTime != null">
+      and online_date_time = #{queryBean.onlineDateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="queryBean.videoUrl != null">
+      and video_url = #{queryBean.videoUrl,jdbcType=VARCHAR}
+    </if>
+  	limit #{page.pageBeginIndex} , #{page.pageSize}
+  </select>
+</mapper>

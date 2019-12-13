@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muguangli.api.mapper.LessonWorkMapper">
+  <resultMap id="BaseResultMap" type="com.muguangli.api.pojo.LessonWork">
+    <id column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="image_name" jdbcType="VARCHAR" property="imageName" />
+    <result column="work_title" jdbcType="VARCHAR" property="workTitle" />
+    <result column="work_url" jdbcType="VARCHAR" property="workUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="is_head" jdbcType="INTEGER" property="isHead" />
+  </resultMap>
+  <resultMap id="BaseResultMapDTO" type="com.muguangli.api.dto.LessonWorkDTO">
+    <id column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="image_name" jdbcType="VARCHAR" property="imageName" />
+    <result column="work_title" jdbcType="VARCHAR" property="workTitle" />
+    <result column="work_url" jdbcType="VARCHAR" property="workUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="is_head" jdbcType="INTEGER" property="isHead" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    work_id, lesson_id, open_id, nick_name, image_name, work_title, work_url, 
+    create_time, update_time, 
+    status, 
+    is_head
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lesson_work
+    where work_id = #{workId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lesson_work
+    where work_id = #{workId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.muguangli.api.pojo.LessonWork">
+    insert into lesson_work (work_id, lesson_id, open_id, 
+      nick_name, image_name, work_title, work_url, create_time, 
+      update_time, status, is_head
+      )
+    values (#{workId,jdbcType=INTEGER}, #{lessonId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{imageName,jdbcType=VARCHAR},#{workTitle,jdbcType=VARCHAR}, 
+      #{workUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{isHead,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.muguangli.api.pojo.LessonWork">
+    insert into lesson_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workId != null">
+        work_id,
+      </if>
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="imageName != null">
+      	image_name,
+      </if>
+      <if test="workTitle != null">
+      	work_title,
+      </if>
+      <if test="workUrl != null">
+        work_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="isHead != null">
+        is_head,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workId != null">
+        #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null">
+      	#{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="workTitle != null">
+      	#{workTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="workUrl != null">
+        #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isHead != null">
+        #{isHead,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.muguangli.api.pojo.LessonWork">
+    update lesson_work
+    <set>
+      <if test="lessonId != null">
+        lesson_id = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null">
+        image_name = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="workTitle != null">
+      	work_title = #{workTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="workUrl != null">
+        work_url = #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isHead != null">
+        is_head = #{isHead,jdbcType=INTEGER},
+      </if>
+    </set>
+    where work_id = #{workId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.muguangli.api.pojo.LessonWork">
+    update lesson_work
+    set lesson_id = #{lessonId,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      image_name = #{imageName,jdbcType=VARCHAR},
+      work_title = #{workTitle,jdbcType=VARCHAR},
+      work_url = #{workUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      is_head = #{isHead,jdbcType=INTEGER}
+    where work_id = #{workId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryLessonWorkList" parameterType="com.muguangli.api.pojo.LessonWork" resultMap="BaseResultMapDTO">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from lesson_work where 1=1
+  	<if test="openId != null and openId !=''">
+  		and open_id = #{openId,jdbcType=VARCHAR}
+  	</if>
+  	<if test="lessonId != null">
+  		and lesson_id = #{lessonId,jdbcType=INTEGER}
+  	</if>
+  	order by status, create_time
+  </select>
+  
+</mapper>

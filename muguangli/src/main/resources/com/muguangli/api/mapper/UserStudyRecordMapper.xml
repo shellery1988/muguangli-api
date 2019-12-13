@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muguangli.api.mapper.UserStudyRecordMapper">
+  <resultMap id="BaseResultMap" type="com.muguangli.api.pojo.UserStudyRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="task_stage" jdbcType="INTEGER" property="taskStage" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+  </resultMap>
+  <resultMap id="BaseResultMapVO" type="com.muguangli.api.vo.UserStudyRecordVO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="task_stage" jdbcType="INTEGER" property="taskStage" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
+    <result column="create_time_format" jdbcType="VARCHAR" property="createTimeFormat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, lesson_id, open_id, task_stage, create_time, score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_study_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_study_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.muguangli.api.pojo.UserStudyRecord">
+    insert into user_study_record (id, lesson_id, open_id, 
+      task_stage, create_time, score
+      )
+    values (#{id,jdbcType=INTEGER}, #{lessonId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
+      #{taskStage,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.muguangli.api.pojo.UserStudyRecord">
+    insert into user_study_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="taskStage != null">
+        task_stage,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStage != null">
+        #{taskStage,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.muguangli.api.pojo.UserStudyRecord">
+    update user_study_record
+    <set>
+      <if test="lessonId != null">
+        lesson_id = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStage != null">
+        task_stage = #{taskStage,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.muguangli.api.pojo.UserStudyRecord">
+    update user_study_record
+    set lesson_id = #{lessonId,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      task_stage = #{taskStage,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      score = #{score,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryTotalUnlockScoreWithLesson" parameterType="com.muguangli.api.pojo.UserStudyRecord"
+  		resultType="java.lang.Integer">
+  	select sum(score) from user_study_record where 1=1
+  	<if test="lessonId != null">
+      and lesson_id = #{lessonId,jdbcType=INTEGER}
+    </if>
+    <if test="openId != null">
+      and open_id = #{openId,jdbcType=VARCHAR}
+    </if>
+    <if test="taskStage != null">
+      and task_stage = #{taskStage,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id = "queryUserStudyRecordInAllStage" parameterType="com.muguangli.api.pojo.UserStudyRecord" resultMap="BaseResultMapVO">
+  	SELECT
+		l.lesson_id as lesson_id, l.task_stage as task_stage, l.stage_name as stage_name,
+		r.open_id as open_id, date_format(r.create_time,'%Y-%m-%d %H:%i') as create_time_format, 
+		r.score as score
+	FROM
+		lesson_main_stage l
+	LEFT JOIN user_study_record r ON l.task_stage = r.task_stage AND r.score is not null
+	<if test="lessonId != null">
+      and r.lesson_id = #{lessonId,jdbcType=INTEGER}
+    </if>
+    <if test="openId != null">
+      and r.open_id = #{openId,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <select id="queryUserStudyRecordList" parameterType="com.muguangli.api.pojo.UserStudyRecord" resultMap="BaseResultMapVO">
+  	select 
+    <include refid="Base_Column_List" />
+    from user_study_record
+    where 1=1
+    <if test="lessonId != null">
+      and lesson_id = #{lessonId,jdbcType=INTEGER}
+    </if>
+    <if test="openId != null">
+      and open_id = #{openId,jdbcType=VARCHAR}
+    </if>
+    <if test="taskStage != null">
+      and task_stage = #{taskStage,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+</mapper>
